@@ -56,7 +56,7 @@ pip install git+git://github.com/danpaquin/coinbasepro-python.git
 To use this code you have to modify defines.py to include these credentials obtained from Coinbase Pro and it is best to set 
 permissions to r/w for user. As in, chmod 600 it.
 
-### Ticker data
+## Ticker data
 The ticker filename is required for the cbpro_read_accts.py.
 The ticker price and volume can be pulled down by calling...
 
@@ -84,24 +84,24 @@ python3 print-cbpro-orders.py fill order-id-here
 
 
 
-### Support files used as modules by the code
+## Support files used as modules by the code
  There is quite a bit of extra code in the files which can be used to build automated trading
  code from by using these files as a module above and beyond what they are used for in
  cbpro-cli-tools
 coretamodule.py         
 cbpro_buy_sell.py
 
-### defines.py - Holds the Keys and Ticker Filename (optional for all buy cbpro_read_accts.py)
+## defines.py - Holds the Keys and Ticker Filename (optional for all buy cbpro_read_accts.py)
 
 ## Information
 
-###print-cbpro-orders.py
+##print-cbpro-orders.py
 
 Takes 2 arguments. action (OPEN/FILL),id (or ALL or RECENT for OPEN or product id/ order id for FILL)
 
 	 EX: python3 print-cbpro-orders.py open all
 
-###cbpro_read_accts.py
+##cbpro_read_accts.py
 
 Prints the prices and the amounts held in each asset in size and USD.
 Also prints out the portfolio total to portfolio_size.json
@@ -110,7 +110,7 @@ Also prints out the portfolio total to portfolio_size.json
 
 ## Ticker Data
 
-###cbpro-api-price-volume-ticker-5-cryptos-csv.py
+##cbpro-api-price-volume-ticker-5-cryptos-csv.py
 
 This code gets called periodically via CRON to keep a csv with price/volume data, the ticker file.
 This file is used by cbpro_read_accts.py and is optional for the others.
@@ -131,24 +131,24 @@ currency = the currency to buy into or sell from.
 underlying = the asset that is to be bought from or sold to, think BTC-USD, USD as the underlying.
 
 
-###cancel-limit-orders.py
+##cancel-limit-orders.py
 Takes 3 arguments. currency,underlying, and order code or all
 
 	EX: python3 cancel-limit-orders.py btc usd all
 
 
-###manual-market-order.py
+##manual-market-order.py
 Market orders take 5 arguments. action, $ funds,currency & underlying.
 
 	EX: python3 manual-market-order.py buy 100 btc usd
 
 
-###manual-limit-orders.py
+##manual-limit-orders.py
 Limit orders take 6 arguments. action,size,currency,underlying, and price
 
 	EX: python3 manual-limit-orders.py sell 0.001 btc usd 49970
 
-###manual-stop-orders.py
+##manual-stop-orders.py
 Stop orders takes 6 arguments. action,size,currency,underlying, and price.
 * Note : something has changed with cbpro that requires debug as this stop order code does not work at
 this time.
