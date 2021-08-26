@@ -160,6 +160,7 @@ This code is a hack of the index-balancer.py code from cbpro-index-fund-algo
 that allows a manual sell or buy of assets # it will buy and sell to a specific amount.
 It requires the defines.py file which holds the key,b64secret and passphrase for CBPro API..
 It is a tool to manually manage a portfolio from the command line.
+Uses GTT Limit orders Good Till Time of 1 hour. If the portfolio still has an asset that is not set right, just retry after one hour.
 
 ```bash
 python3 manual-portfolio-adjust-using-default-keys.py buy/sell amount highlimit
