@@ -36,6 +36,8 @@ Operations such as...
 - Printing a list of open orders and a summary of the last 5 filled orders
 - Cancelling orders
 - Reading Accounts * This requires downloading data and keeping it updated for prices/volume. See below
+- Bulk buy and sell of cryptos in a portfolio. Allows quick liquidation for example. Or manual adjusting/balancing of portfolio of cryptos (*Note that there is a code repo called cbpro-index-fund-algo that will do this automatically.*)
+
 
 
 ## Requirements
@@ -59,9 +61,9 @@ permissions to r/w for user. As in, chmod 600 it.
 ## Ticker data
 The ticker filename is required for the cbpro_read_accts.py.
 The ticker price and volume can be pulled down by calling...
-
+```bash
 cbpro-api-price-volume-ticker-5-cryptos-csv.py
-
+```
 on an hourly basis to create the ticker csv file.
 A seed file to start from is kept updated at...
 
@@ -78,9 +80,9 @@ Some of the files produce logs of their actions, such as buying and selling. Loo
 ending in .log in the directory that this code in ran under.
 These logs are a good place to find the order id if the status of the order is to be checked in
 the future by using...
-
+```bash
 python3 print-cbpro-orders.py fill order-id-here
-
+```
 
 
 
@@ -98,16 +100,16 @@ cbpro_buy_sell.py
 ### print-cbpro-orders.py
 
 Takes 2 arguments. action (OPEN/FILL),id (or ALL or RECENT for OPEN or product id/ order id for FILL)
-
-	 EX: python3 print-cbpro-orders.py open all
-
+```bash
+python3 print-cbpro-orders.py open all
+```
 ### cbpro_read_accts.py
 
 Prints the prices and the amounts held in each asset in size and USD.
 Also prints out the portfolio total to portfolio_size.json
-
-	EX: python3 cbpro_read_accts.py
-
+```bash
+python3 cbpro_read_accts.py
+```
 ## Ticker Data
 
 ### cbpro-api-price-volume-ticker-5-cryptos-csv.py
@@ -116,9 +118,9 @@ This code gets called periodically via CRON to keep a csv with price/volume data
 This file is used by cbpro_read_accts.py and is optional for the others.
 This file outputs the data to a location hardcoded in the file. 
 A seed file to get started with historic data is available at http://heart-centered-living.org/public/cbpro-data/cbpro_crypto_price_volume_file.csv
-
-	EX: python3 cbpro-api-price-volume-ticker-5-cryptos-csv.py
-
+```bash
+python3 cbpro-api-price-volume-ticker-5-cryptos-csv.py
+```
 ## Action 
 These pieces of code perform an action and will present the action to be performed and
 ask for a confimation before carrying it out.
@@ -133,22 +135,44 @@ underlying = the asset that is to be bought from or sold to, think BTC-USD, USD 
 
 ### cancel-limit-orders.py
 Takes 3 arguments. currency,underlying, and order code or all
-
-	EX: python3 cancel-limit-orders.py btc usd all
+```bash
+python3 cancel-limit-orders.py btc usd all
 
 
 ### manual-market-order.py
 Market orders take 5 arguments. action, $ funds,currency & underlying.
-
-	EX: python3 manual-market-order.py buy 100 btc usd
-
+```bash
+python3 manual-market-order.py buy 100 btc usd
+```
 
 ### manual-limit-orders.py
 Limit orders take 6 arguments. action,size,currency,underlying, and price
-
-	EX: python3 manual-limit-orders.py sell 0.001 btc usd 49970
-
+```bash
+python3 manual-limit-orders.py sell 0.001 btc usd 49970
+```
 ### manual-stop-orders.py
 Stop orders takes 6 arguments. action,size,currency,underlying, and price.
 * Note : something has changed with cbpro that requires debug as this stop order code does not work at
 this time.
+
+### manual-portfolio-adjust-using-default-keys.py
+This code is a hack of the index-balancer.py code from cbpro-index-fund-algo 
+that allows a manual sell or buy of assets # it will buy and sell to a specific amount.
+It requires the defines.py file which holds the key,b64secret and passphrase for CBPro API..
+It is a tool to manually manage a portfolio from the command line.
+
+```bash
+python3 manual-portfolio-adjust-using-default-keys.py buy/sell amount highlimit
+```
+
+Where buy amd sell are spelled out and the amount is the amount to asjust all assets to
+The highlimit is the amount above which no action should be taken.
+For example if the following is executed...
+
+```bash
+python3 manual-portfolio-adjust-using-default-keys.py sell 20 999
+```
+
+... the above command will sell all assets holding above $20 and below $999 to $20.
+			It will produce a log file called manual-portfolio-adjust-using-default-keys.py.log
+			This will log all the transactions.
