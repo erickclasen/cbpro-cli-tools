@@ -17,6 +17,10 @@ a Raspberry Pi.
 
 Note: Access the Coinbase Pro API via cbpro requires Python3 to work with SSL.
 
+Note: Coinbase Pro was taken down by Coinbase and replaced with Coinbase Advanced. So this code is no longer functional.
+The latest codebase that works in a silimar fashion to collect price data from CoinGecko and perform TA on it with graphing is now
+located at https://github.com/erickclasen/commandline-ta-tools
+
 ## Reminder
 Although this code has been used in production successfully, there is no guarantee that it is
 bug free and will always remain in working order.
